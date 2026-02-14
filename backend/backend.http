@@ -1,0 +1,108 @@
+### Task Management API - Test Requests
+
+@baseUrl = http://localhost:5083
+@httpsUrl = https://localhost:7191
+
+### 1. Get all tasks (should be empty initially)
+GET {{httpsUrl}}/api/tasks
+Accept: application/json
+
+###
+
+### 2. Create a new task with title and description
+POST {{httpsUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Complete project documentation",
+  "description": "Write comprehensive documentation for the Task Management API"
+}
+
+###
+
+### 3. Create another task (title only)
+POST {{httpsUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Review pull requests"
+}
+
+###
+
+### 4. Create a third task
+POST {{httpsUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Fix bugs in authentication module",
+  "description": "Address the issues reported in tickets #101 and #102"
+}
+
+###
+
+### 5. Get all tasks (should now have tasks)
+GET {{httpsUrl}}/api/tasks
+Accept: application/json
+
+###
+
+### 6. Get a specific task by ID (replace {id} with actual ID, e.g., 1)
+GET {{httpsUrl}}/api/tasks/1
+Accept: application/json
+
+###
+
+### 7. Mark a task as complete (replace {id} with actual ID)
+PUT {{httpsUrl}}/api/tasks/1/complete
+
+###
+
+### 8. Get the completed task to verify
+GET {{httpsUrl}}/api/tasks/1
+Accept: application/json
+
+###
+
+### 9. Delete a task (replace {id} with actual ID)
+DELETE {{httpsUrl}}/api/tasks/2
+
+###
+
+### 10. Try to get deleted task (should return 404)
+GET {{httpsUrl}}/api/tasks/2
+Accept: application/json
+
+###
+
+### 11. Validation test - Create task without title (should fail)
+POST {{httpsUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "description": "This task has no title"
+}
+
+###
+
+### 12. Validation test - Create task with empty title (should fail)
+POST {{httpsUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "This task has empty title"
+}
+
+###
+
+### 13. Try to mark non-existent task as complete (should return 404)
+PUT {{httpsUrl}}/api/tasks/9999/complete
+
+###
+
+### 14. Try to delete non-existent task (should return 404)
+DELETE {{httpsUrl}}/api/tasks/9999
+
+###
+
