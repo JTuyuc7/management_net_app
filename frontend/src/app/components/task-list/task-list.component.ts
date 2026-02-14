@@ -52,18 +52,18 @@ export class TaskListComponent implements OnInit {
 
   getPriorityClass(priority?: TaskPriority | null): string {
     if (!priority) {
-      return '';
+      return 'bg-slate-200 text-slate-700';
     }
 
     switch (priority.toLowerCase()) {
       case 'high':
-        return 'priority-high';
+        return 'bg-rose-500 text-white';
       case 'medium':
-        return 'priority-medium';
+        return 'bg-amber-400 text-slate-900';
       case 'low':
-        return 'priority-low';
+        return 'bg-emerald-500 text-white';
       default:
-        return '';
+        return 'bg-slate-200 text-slate-700';
     }
   }
 

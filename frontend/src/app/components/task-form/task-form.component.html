@@ -1,105 +1,117 @@
-<div class="task-form-container">
+<div class="mb-6">
   <!-- Toggle Button -->
   <button
     type="button"
-    class="toggle-form-btn"
-    (click)="toggleForm()"
-    [class.active]="showForm"
-    [class.edit-mode]="isEditMode">
+    class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2 text-sm font-semibold text-white shadow transition hover:shadow-md"
+    [ngClass]="isEditMode ? 'from-amber-400 to-orange-500' : (showForm ? 'from-rose-500 to-red-600' : 'from-indigo-500 to-purple-500')"
+    (click)="toggleForm()">
     <span *ngIf="!showForm && !isEditMode">+ Create New Task</span>
     <span *ngIf="showForm && !isEditMode">✕ Cancel</span>
     <span *ngIf="isEditMode">✕ Cancel Edit</span>
   </button>
 
   <!-- Form Container -->
-  <div class="form-wrapper" *ngIf="showForm" [class.edit-mode]="isEditMode">
-    <h3>{{ isEditMode ? 'Edit Task' : 'Create New Task' }}</h3>
+  <div class="mt-4 rounded-xl bg-white p-6 shadow" *ngIf="showForm">
+    <h3 class="mb-4 text-lg font-semibold text-slate-800">
+      {{ isEditMode ? 'Edit Task' : 'Create New Task' }}
+    </h3>
 
     <!-- Success Message -->
-    <div *ngIf="successMessage" class="alert alert-success">
+    <div *ngIf="successMessage" class="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
       {{ successMessage }}
     </div>
 
     <!-- Error Message -->
-    <div *ngIf="errorMessage" class="alert alert-error">
+    <div *ngIf="errorMessage" class="mb-4 rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
       {{ errorMessage }}
     </div>
 
     <!-- Form -->
-    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
-
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="space-y-5">
       <!-- Title Field -->
-      <div class="form-group">
-        <label for="title">Title <span class="required">*</span></label>
+      <div>
+        <label for="title" class="text-sm font-semibold text-slate-700">
+          Title <span class="text-rose-500">*</span>
+        </label>
         <input
           type="text"
           id="title"
           formControlName="title"
           placeholder="Enter task title"
-          [class.invalid]="isFieldInvalid('title')">
-        <div class="error-message" *ngIf="isFieldInvalid('title')">
+          class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+          [ngClass]="{ 'border-rose-500 focus:border-rose-500 focus:ring-rose-200': isFieldInvalid('title') }">
+        <div class="mt-1 text-xs text-rose-600" *ngIf="isFieldInvalid('title')">
           {{ getFieldError('title') }}
         </div>
       </div>
 
       <!-- Description Field -->
-      <div class="form-group">
-        <label for="description">Description <span class="required">*</span></label>
+      <div>
+        <label for="description" class="text-sm font-semibold text-slate-700">
+          Description <span class="text-rose-500">*</span>
+        </label>
         <textarea
           id="description"
           formControlName="description"
           rows="4"
           placeholder="Enter task description"
-          [class.invalid]="isFieldInvalid('description')"></textarea>
-        <div class="error-message" *ngIf="isFieldInvalid('description')">
+          class="mt-2 w-full resize-y rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+          [ngClass]="{ 'border-rose-500 focus:border-rose-500 focus:ring-rose-200': isFieldInvalid('description') }"></textarea>
+        <div class="mt-1 text-xs text-rose-600" *ngIf="isFieldInvalid('description')">
           {{ getFieldError('description') }}
         </div>
       </div>
 
       <!-- Due Date and Priority Row -->
-      <div class="form-row">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
         <!-- Due Date Field -->
-        <div class="form-group">
-          <label for="dueDate">Due Date <span class="required">*</span></label>
+        <div>
+          <label for="dueDate" class="text-sm font-semibold text-slate-700">
+            Due Date <span class="text-rose-500">*</span>
+          </label>
           <input
             type="date"
             id="dueDate"
             formControlName="dueDate"
-            [class.invalid]="isFieldInvalid('dueDate')">
-          <div class="error-message" *ngIf="isFieldInvalid('dueDate')">
+            class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+            [ngClass]="{ 'border-rose-500 focus:border-rose-500 focus:ring-rose-200': isFieldInvalid('dueDate') }">
+          <div class="mt-1 text-xs text-rose-600" *ngIf="isFieldInvalid('dueDate')">
             {{ getFieldError('dueDate') }}
           </div>
         </div>
 
         <!-- Priority Field -->
-        <div class="form-group">
-          <label for="priority">Priority <span class="required">*</span></label>
+        <div>
+          <label for="priority" class="text-sm font-semibold text-slate-700">
+            Priority <span class="text-rose-500">*</span>
+          </label>
           <select
             id="priority"
             formControlName="priority"
-            [class.invalid]="isFieldInvalid('priority')">
+            class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+            [ngClass]="{ 'border-rose-500 focus:border-rose-500 focus:ring-rose-200': isFieldInvalid('priority') }">
             <option *ngFor="let priority of priorities" [value]="priority">
               {{ priority }}
             </option>
           </select>
-          <div class="error-message" *ngIf="isFieldInvalid('priority')">
+          <div class="mt-1 text-xs text-rose-600" *ngIf="isFieldInvalid('priority')">
             {{ getFieldError('priority') }}
           </div>
         </div>
       </div>
 
       <!-- Form Actions -->
-      <div class="form-actions">
+      <div class="flex items-center justify-end gap-3">
         <button
           type="button"
-          class="btn btn-secondary"
+          class="rounded-md bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-300 disabled:cursor-not-allowed disabled:opacity-60"
           (click)="isEditMode ? cancelEdit() : setFormVisible(false)"
           [disabled]="isSubmitting">
           Cancel
         </button>
         <button
           type="submit"
-          class="btn btn-primary"
+          class="rounded-md bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2 text-sm font-semibold text-white shadow transition hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
           [disabled]="isSubmitting">
           <span *ngIf="!isSubmitting && !isEditMode">Create Task</span>
           <span *ngIf="!isSubmitting && isEditMode">Update Task</span>
