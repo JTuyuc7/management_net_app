@@ -1,1 +1,11 @@
 .idea
+
+# Docker
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+./backend/bin
+./backend/obj
