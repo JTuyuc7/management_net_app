@@ -1,0 +1,85 @@
+<div class="task-list-container">
+  <!-- Task Form Component -->
+  <app-task-form
+    [editingTask]="editingTask"
+    (taskCreated)="loadTasks()"
+    (taskUpdated)="onTaskUpdated()"
+    (editCancelled)="cancelEdit()">
+  </app-task-form>
+
+  <h2>Task List</h2>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading">
+    <p>Loading tasks...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error">
+    <p>{{ error }}</p>
+    <button (click)="loadTasks()" class="retry-button">Retry</button>
+  </div>
+
+  <!-- Tasks Table -->
+  <div *ngIf="!loading && !error" class="tasks-wrapper">
+    <div *ngIf="tasks.length === 0" class="no-tasks">
+      <p>No tasks found. Create your first task!</p>
+    </div>
+
+    <table *ngIf="tasks.length > 0" class="tasks-table">
+      <thead>
+        <tr>
+          <th class="checkbox-col">Done</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th class="actions-col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks" [class.completed]="task.isCompleted">
+          <td class="checkbox-col">
+            <input
+              type="checkbox"
+              [checked]="task.isCompleted"
+              (change)="toggleTaskCompletion(task)"
+              class="task-checkbox">
+          </td>
+          <td class="task-title">{{ task.title }}</td>
+          <td class="task-description">{{ task.description }}</td>
+          <td>{{ formatDate(task.dueDate) }}</td>
+          <td>
+            <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
+              {{ task.priority }}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge" [class.status-completed]="task.isCompleted">
+              {{ task.isCompleted ? 'Completed' : 'Pending' }}
+            </span>
+          </td>
+          <td class="task-created">{{ formatDate(task.createdDate) }}</td>
+          <td class="actions-col">
+            <div class="action-buttons">
+              <button
+                class="btn-action btn-edit"
+                (click)="editTask(task)"
+                title="Edit task">
+                ✏️
+              </button>
+              <button
+                class="btn-action btn-delete"
+                (click)="deleteTask(task)"
+                title="Delete task">
+                🗑️
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

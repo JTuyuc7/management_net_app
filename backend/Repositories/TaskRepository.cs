@@ -49,6 +49,9 @@ public class TaskRepository : ITaskRepository
         existingTask.Title = task.Title;
         existingTask.Description = task.Description;
         existingTask.IsCompleted = task.IsCompleted;
+        existingTask.DueDate = task.DueDate;
+        existingTask.Status = task.Status;
+        existingTask.Priority = task.Priority;
 
         await _context.SaveChangesAsync();
         return existingTask;
@@ -79,5 +82,9 @@ public class TaskRepository : ITaskRepository
         await _context.SaveChangesAsync();
         return true;
     }
-}
 
+    public async Task<TaskItem?> UpdateTaskDetailsAsync(TaskItem task)
+    {
+        return await UpdateTaskAsync(task);
+    }
+}
