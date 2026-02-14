@@ -28,6 +28,11 @@ public interface ITaskRepository
     Task<TaskItem?> UpdateTaskAsync(TaskItem task);
 
     /// <summary>
+    /// Updates the status of a task
+    /// </summary>
+    Task<TaskItem?> UpdateTaskDetailsAsync(TaskItem task);
+
+    /// <summary>
     /// Deletes a task by its ID
     /// </summary>
     Task<bool> DeleteTaskAsync(int id);
