@@ -48,55 +48,17 @@
       <!-- Description Field -->
       <div>
         <label for="description" class="text-sm font-semibold text-slate-700">
-          Description <span class="text-rose-500">*</span>
+          Description
         </label>
         <textarea
           id="description"
           formControlName="description"
           rows="4"
-          placeholder="Enter task description"
+          placeholder="Enter task description (optional)"
           class="mt-2 w-full resize-y rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
           [ngClass]="{ 'border-rose-500 focus:border-rose-500 focus:ring-rose-200': isFieldInvalid('description') }"></textarea>
         <div class="mt-1 text-xs text-rose-600" *ngIf="isFieldInvalid('description')">
           {{ getFieldError('description') }}
-        </div>
-      </div>
-
-      <!-- Due Date and Priority Row -->
-      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <!-- Due Date Field -->
-        <div>
-          <label for="dueDate" class="text-sm font-semibold text-slate-700">
-            Due Date <span class="text-rose-500">*</span>
-          </label>
-          <input
-            type="date"
-            id="dueDate"
-            formControlName="dueDate"
-            class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
-            [ngClass]="{ 'border-rose-500 focus:border-rose-500 focus:ring-rose-200': isFieldInvalid('dueDate') }">
-          <div class="mt-1 text-xs text-rose-600" *ngIf="isFieldInvalid('dueDate')">
-            {{ getFieldError('dueDate') }}
-          </div>
-        </div>
-
-        <!-- Priority Field -->
-        <div>
-          <label for="priority" class="text-sm font-semibold text-slate-700">
-            Priority <span class="text-rose-500">*</span>
-          </label>
-          <select
-            id="priority"
-            formControlName="priority"
-            class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
-            [ngClass]="{ 'border-rose-500 focus:border-rose-500 focus:ring-rose-200': isFieldInvalid('priority') }">
-            <option *ngFor="let priority of priorities" [value]="priority">
-              {{ priority }}
-            </option>
-          </select>
-          <div class="mt-1 text-xs text-rose-600" *ngIf="isFieldInvalid('priority')">
-            {{ getFieldError('priority') }}
-          </div>
         </div>
       </div>
 

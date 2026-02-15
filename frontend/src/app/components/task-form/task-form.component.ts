@@ -24,17 +24,13 @@ export class TaskFormComponent implements OnChanges {
   successMessage: string | null = null;
   isEditMode = false;
 
-  priorities = ['Low', 'Medium', 'High'];
-
   constructor(
     private fb: FormBuilder,
     private taskService: TaskService
   ) {
     this.taskForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
-      dueDate: ['', Validators.required],
-      priority: ['Medium', Validators.required]
+      description: ['', [Validators.maxLength(500)]]
     });
   }
 
@@ -50,15 +46,9 @@ export class TaskFormComponent implements OnChanges {
   }
 
   populateForm(task: Task): void {
-    // Format the date for the input field (YYYY-MM-DD)
-    const dueDate = new Date(task.dueDate);
-    const formattedDate = dueDate.toISOString().split('T')[0];
-
     this.taskForm.patchValue({
       title: task.title,
-      description: task.description,
-      dueDate: formattedDate,
-      priority: task.priority
+      description: task.description || ''
     });
   }
 
@@ -103,10 +93,8 @@ export class TaskFormComponent implements OnChanges {
       // Update existing task
       const updatedTask = {
         title: formValue.title,
-        description: formValue.description,
-        isCompleted: this.editingTask.isCompleted,
-        dueDate: new Date(formValue.dueDate).toISOString(),
-        priority: formValue.priority
+        description: formValue.description || '',
+        isCompleted: this.editingTask.isCompleted
       };
 
       this.taskService.updateTask(this.editingTask.id, updatedTask).subscribe({
@@ -131,9 +119,7 @@ export class TaskFormComponent implements OnChanges {
       // Create new task
       const newTask: CreateTaskDto = {
         title: formValue.title,
-        description: formValue.description,
-        dueDate: new Date(formValue.dueDate).toISOString(),
-        priority: formValue.priority
+        description: formValue.description || undefined
       };
 
       this.taskService.createTask(newTask).subscribe({
@@ -157,9 +143,7 @@ export class TaskFormComponent implements OnChanges {
   }
 
   resetForm(): void {
-    this.taskForm.reset({
-      priority: 'Medium'
-    });
+    this.taskForm.reset();
     this.isSubmitting = false;
     this.errorMessage = null;
   }

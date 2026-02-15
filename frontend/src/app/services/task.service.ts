@@ -28,8 +28,13 @@ export class TaskService {
   }
 
   // Update an existing task
-  updateTask(id: number, task: UpdateTaskDto): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, task);
+  updateTask(id: number, task: UpdateTaskDto): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/${id}`, task);
+  }
+
+  // Mark a task as complete
+  markTaskAsComplete(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}/complete`, {});
   }
 
   // Delete a task

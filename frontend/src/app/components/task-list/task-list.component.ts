@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../services/task.service';
-import {Task, TaskPriority} from '../../models/task.model';
+import { Task } from '../../models/task.model';
 import { TaskFormComponent } from '../task-form/task-form.component';
 
 @Component({
@@ -46,47 +46,43 @@ export class TaskListComponent implements OnInit {
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
     });
   }
 
-  getPriorityClass(priority?: TaskPriority | null): string {
-    if (!priority) {
-      return 'bg-slate-200 text-slate-700';
-    }
-
-    switch (priority.toLowerCase()) {
-      case 'high':
-        return 'bg-rose-500 text-white';
-      case 'medium':
-        return 'bg-amber-400 text-slate-900';
-      case 'low':
-        return 'bg-emerald-500 text-white';
-      default:
-        return 'bg-slate-200 text-slate-700';
-    }
-  }
-
-  // Toggle task completion status
+  // Toggle task completion status using the /complete endpoint
   toggleTaskCompletion(task: Task): void {
-    const updatedTask = {
-      title: task.title,
-      description: task.description,
-      isCompleted: !task.isCompleted,
-      dueDate: task.dueDate,
-      priority: task.priority
-    };
+    if (task.isCompleted) {
+      // If already completed, we need to use the update endpoint to mark as incomplete
+      const updatedTask = {
+        title: task.title,
+        description: task.description,
+        isCompleted: false
+      };
 
-    this.taskService.updateTask(task.id, updatedTask).subscribe({
-      next: () => {
-        // Update the task in the local array
-        task.isCompleted = !task.isCompleted;
-      },
-      error: (err) => {
-        console.error('Error toggling task completion:', err);
-        alert('Failed to update task status. Please try again.');
-      }
-    });
+      this.taskService.updateTask(task.id, updatedTask).subscribe({
+        next: () => {
+          task.isCompleted = false;
+        },
+        error: (err) => {
+          console.error('Error toggling task completion:', err);
+          alert('Failed to update task status. Please try again.');
+        }
+      });
+    } else {
+      // Use the dedicated /complete endpoint
+      this.taskService.markTaskAsComplete(task.id).subscribe({
+        next: () => {
+          task.isCompleted = true;
+        },
+        error: (err) => {
+          console.error('Error marking task as complete:', err);
+          alert('Failed to mark task as complete. Please try again.');
+        }
+      });
+    }
   }
 
   // Delete a task
