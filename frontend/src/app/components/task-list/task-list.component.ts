@@ -29,7 +29,6 @@ export class TaskListComponent implements OnInit {
 
     this.taskService.getTasks().subscribe({
       next: (data) => {
-        console.log('Tasks loaded successfully:', data);
         this.tasks = data;
         this.loading = false;
       },
