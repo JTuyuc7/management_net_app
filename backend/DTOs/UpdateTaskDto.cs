@@ -15,21 +15,4 @@ public class UpdateTaskDto
     public string? Description { get; set; }
 
     public bool IsCompleted { get; set; }
-
-    /// <summary>
-    /// Optional due date for the task
-    /// </summary>
-    public DateTime? DueDate { get; set; }
-
-    /// <summary>
-    /// Optional status of the task (e.g., "Pending", "In Progress", "Completed")
-    /// </summary>
-    [StringLength(50, ErrorMessage = "Status cannot exceed 50 characters")]
-    public string? Status { get; set; } = "Pending";
-
-    /// <summary>
-    /// Indicates the priority of the task (e.g., "Low", "Medium", "High")
-    /// </summary>
-    [StringLength(20, ErrorMessage = "Priority cannot exceed 20 characters")]
-    public string? Priority { get; set; } = "Medium";
 }

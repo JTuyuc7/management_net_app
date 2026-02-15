@@ -86,9 +86,6 @@ public class TasksController : ControllerBase
                 Title = createTaskDto.Title.Trim(),
                 Description = createTaskDto.Description?.Trim(),
                 CreatedDate = DateTime.UtcNow,
-                DueDate = createTaskDto.DueDate,
-                Status = createTaskDto.Status?.Trim() ?? "Pending",
-                Priority = createTaskDto.Priority?.Trim() ?? "Medium",
                 IsCompleted = false
             };
 
@@ -104,48 +101,6 @@ public class TasksController : ControllerBase
         {
             _logger.LogError(ex, "Error creating task");
             return StatusCode(500, "An error occurred while creating the task");
-        }
-    }
-
-    /// <summary>
-    /// PUT /api/tasks/{id} - Updates an existing task
-    /// </summary>
-    [HttpPut("{id}")]
-    [ProducesResponseType(typeof(TaskItem), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<TaskItem>> UpdateTask(int id, [FromBody] UpdateTaskDto updateTaskDto)
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        try
-        {
-            var taskToUpdate = new TaskItem
-            {
-                Id = id,
-                Title = updateTaskDto.Title.Trim(),
-                Description = updateTaskDto.Description?.Trim(),
-                IsCompleted = updateTaskDto.IsCompleted,
-                DueDate = updateTaskDto.DueDate,
-                Status = updateTaskDto.Status?.Trim() ?? "Pending",
-                Priority = updateTaskDto.Priority?.Trim() ?? "Medium"
-            };
-
-            var updatedTask = await _taskRepository.UpdateTaskDetailsAsync(taskToUpdate);
-            if (updatedTask == null)
-            {
-                return NotFound(new { message = $"Task with ID {id} not found" });
-            }
-
-            return Ok(updatedTask);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error updating task {TaskId}", id);
-            return StatusCode(500, "An error occurred while updating the task");
         }
     }
 
