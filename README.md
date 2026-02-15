@@ -414,9 +414,19 @@ docker logs -f task-management-frontend
 ## How does it look?
 
 #### Main Page
+<img width="1919" height="1021" alt="Screenshot 2026-02-14 at 6 51 03 PM" src="https://github.com/user-attachments/assets/c6137c67-f54a-49eb-b8b2-aa387883c619" />
 
 #### Task Creation Modal
+<img width="1919" height="1003" alt="Screenshot 2026-02-14 at 6 51 12 PM" src="https://github.com/user-attachments/assets/bd162027-b8e7-4223-a4a3-1d9e9d76df5f" />
+
+#### Validation Task
+<img width="1916" height="1005" alt="Screenshot 2026-02-14 at 6 58 26 PM" src="https://github.com/user-attachments/assets/acba1d77-8c56-4a6f-ba28-5aaf7a81dfdd" />
+
+#### Task Lists
+<img width="1919" height="1007" alt="Screenshot 2026-02-14 at 6 51 30 PM" src="https://github.com/user-attachments/assets/f16aa704-8883-458e-bf5e-515f9c118332" />
 
 #### Complete Task
+<img width="1916" height="1006" alt="Screenshot 2026-02-14 at 6 51 39 PM" src="https://github.com/user-attachments/assets/96b0ed35-7a16-40ab-a44f-3789b7c03cef" />
+
 
 _Develop by:_ ***Jaime Tuyuc***
