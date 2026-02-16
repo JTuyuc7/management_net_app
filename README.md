@@ -411,6 +411,16 @@ docker logs -f task-management-backend
 docker logs -f task-management-frontend
 ```
 
+### Testing
+Included an initial set of unit and integration tests for the backend API. To run tests:
+
+Navigate to [backend.Tests](./backend.Tests) and run:
+
+```bash
+dotnet test
+```
+
+
 ## How does it look?
 
 #### Main Page
